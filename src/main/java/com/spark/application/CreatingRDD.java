@@ -23,14 +23,25 @@ public class CreatingRDD {
         System.out.println("Array RDD count:" + javaRDD.count());
 
         //From the file - textFile
-        JavaRDD<String> javaRDD1 = jsc.textFile("D:\\TestData\\Spark\\Names.csv");
+        JavaRDD<String> javaRDD1 = jsc.textFile("D:\\TestData\\Spark\\Text.txt");
         System.out.println("File RDD count:" + javaRDD1.count());
-        javaRDD.collect().forEach(p-> System.out.println(p));
+        javaRDD1.collect().forEach(p-> System.out.println(p));
+        javaRDD1.map(p-> p.length());
         System.out.println("File RDD partitions:" + javaRDD1.partitions().size()); // Gives unexpected result for higher minPartitions count
 
         //From the file - wholeTextFile
         JavaPairRDD<String, String> pairRDD = jsc.wholeTextFiles("D:\\TestData\\Spark\\parks.csv");
         pairRDD.collect().forEach(p-> System.out.println(p._1()  + ":" + p._2()));
 
+        //Read all text files from a directory into a single RDD
+        JavaRDD<String> rddMulti = jsc.textFile("D:\\TestData\\Spark\\*");
+        rddMulti.foreach(p-> System.out.println(p));
+
+        //From the file - csv file
+        JavaRDD<String> javaRDD2 = jsc.textFile("D:\\TestData\\Spark\\Names.csv");
+        System.out.println("File RDD count:" + javaRDD2.count());
+        javaRDD2.foreach(p -> System.out.println(p));
+        JavaRDD<List<String>> splitRDD = javaRDD2.map(p -> Arrays.asList(p.split(",")));
+        splitRDD.foreach(p -> System.out.println(p));
     }
 }
