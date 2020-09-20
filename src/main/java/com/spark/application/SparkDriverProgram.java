@@ -1,5 +1,7 @@
 package com.spark.application;
 
+import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
 import org.apache.spark.SparkConf;
 import org.apache.spark.api.java.JavaSparkContext;
 import org.apache.spark.sql.SparkSession;
@@ -7,8 +9,10 @@ import org.apache.spark.sql.SparkSession;
 public class SparkDriverProgram {
     public static void main(String[] args) {
 
+        Logger.getLogger("org").setLevel(Level.ERROR);
         SparkSession spark = SparkSession.builder().master("local[*]").appName("Java Spark SQL Example").getOrCreate();
         System.out.println("Version : " + spark.version());
+
 
         //Spark 1.0
         SparkConf sc = new SparkConf().setAppName("Driver Program").setMaster("local[2]");
