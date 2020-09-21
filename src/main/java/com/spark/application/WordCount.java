@@ -16,11 +16,14 @@ import org.apache.tika.sax.BodyContentHandler;
 import org.xml.sax.ContentHandler;
 import org.xml.sax.SAXException;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Arrays;
 
 public class WordCount {
-    public static void main(String[] args) throws FileNotFoundException {
+    public static void main(String[] args) {
 
         Logger.getLogger("org").setLevel(Level.ERROR);
         SparkSession spark = SparkSession.builder().master("local[*]").appName("Wordcount").getOrCreate();
@@ -36,9 +39,7 @@ public class WordCount {
 
     }
 
-    public static String extractContentUsingParser(String fileName)
-            throws IOException, TikaException, SAXException {
-
+    public static String extractContentUsingParser(String fileName) throws IOException, TikaException, SAXException {
         Parser parser = new AutoDetectParser();
         ContentHandler handler = new BodyContentHandler();
         Metadata metadata = new Metadata();
