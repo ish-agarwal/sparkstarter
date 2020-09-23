@@ -1,4 +1,4 @@
-package com.spark.application;
+package com.spark.problem;
 
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
